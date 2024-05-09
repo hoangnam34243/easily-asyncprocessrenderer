@@ -1,20 +1,18 @@
-function multiply(num1, num2) {
-  const m = num1.length;
-  const n = num2.length;
-  const pos = new Array(m + n).fill(0);
-  for (let i = m - 1; i >= 0; i--) {
-    for (let j = n - 1; j >= 0; j--) {
-      const mul = (num1[i] - "0") * (num2[j] - "0");
-      const p1 = i + j;
-      const p2 = i + j + 1;
-      const sum = mul + pos[p2];
-      pos[p1] += Math.floor(sum / 10);
-      pos[p2] = sum % 10;
+function minPathSum(grid) {
+  const m = grid.length;
+  const n = grid[0].length;
+  const dp = Array.from(Array(m), () => Array(n).fill(0));
+  dp[0][0] = grid[0][0];
+  for (let i = 1; i < m; i++) {
+    dp[i][0] = dp[i - 1][0] + grid[i][0];
+  }
+  for (let j = 1; j < n; j++) {
+    dp[0][j] = dp[0][j - 1] + grid[0][j];
+  }
+  for (let i = 1; i < m; i++) {
+    for (let j = 1; j < n; j++) {
+      dp[i][j] = grid[i][j] + Math.min(dp[i - 1][j], dp[i][j - 1]);
     }
   }
-  let result = "";
-  for (const p of pos) {
-    if (!(result.length === 0 && p === 0)) result += p;
-  }
-  return result.length === 0 ? "0" : result;
+  return dp[m - 1][n - 1];
 }
