@@ -1,12 +1,8 @@
-function lengthOfLongestSubstring(s) {
-  if (s.length === 0) return 0;
-  const map = new Map();
-  let maxLength = 0;
-  let left = 0;
-  for (let right = 0; right < s.length; right++) {
-    if (map.has(s[right])) left = Math.max(left, map.get(s[right]) + 1);
-    map.set(s[right], right);
-    maxLength = Math.max(maxLength, right - left + 1);
-  }
-  return maxLength;
+function sortedArrayToBST(nums) {
+  if (nums.length === 0) return null;
+  const mid = Math.floor(nums.length / 2);
+  const root = new TreeNode(nums[mid]);
+  root.left = sortedArrayToBST(nums.slice(0, mid));
+  root.right = sortedArrayToBST(nums.slice(mid + 1));
+  return root;
 }
