@@ -1,26 +1,12 @@
-const mergeSortIterative = (arr) => {
-  const merge = (left, right) => {
-    let result = [];
-    let leftIndex = 0;
-    let rightIndex = 0;
-    while (leftIndex < left.length && rightIndex < right.length) {
-      if (left[leftIndex] < right[rightIndex]) {
-        result.push(left[leftIndex]);
-        leftIndex++;
-      } else {
-        result.push(right[rightIndex]);
-        rightIndex++;
-      }
-    }
-    return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
-  };
-  const mergeSize = 2;
-  for (let i = 0; i < arr.length; i += mergeSize) {
-    for (let j = i; j < arr.length; j += mergeSize) {
-      const left = arr.slice(j, j + mergeSize / 2);
-      const right = arr.slice(j + mergeSize / 2, j + mergeSize);
-      arr.splice(j, mergeSize, ...merge(left, right));
+function isValidParentheses(s) {
+  const stack = [];
+  const map = { "(": ")", "[": "]", "{": "}" };
+  for (const char of s) {
+    if (char in map) stack.push(char);
+    else {
+      const top = stack.pop();
+      if (map[top] !== char) return false;
     }
   }
-  return arr;
-};
+  return stack.length === 0;
+}
